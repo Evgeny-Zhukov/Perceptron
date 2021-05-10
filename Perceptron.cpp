@@ -2,6 +2,60 @@
 
 using std::cout;
 using std::endl;
+
+class Neuron
+{
+public:
+	Neuron(int weight,int input)
+	{
+		this->weight = weight;
+		this->input = input;
+		
+	}
+
+	int Output(int input, int weight)
+	{
+		return (this->output = input * weight);
+	}
+	int getInput()
+	{
+		return this->input;
+	}
+	int getWeight()
+	{
+		return this->weight;
+	}
+private:
+	int input;
+	int weight;
+	int output;
+};
+template<typename T>
+int Output(T a,T b)
+{
+	if (a.Output(a.getInput(), a.getWeight()) + b.Output(b.getInput(), b.getWeight()) <= 0)
+	{
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}
+}
+int main()
+{
+	Neuron S1_A1(-1,1);
+	Neuron S2_A1(1, 1);
+	cout<<Output(S1_A1, S2_A1)<<endl;
+	
+
+	Neuron S1_A2(1, 1);
+	Neuron S2_A2(1, 1);
+	Neuron S1_A3(-1, 1);
+	Neuron S2_A3(1, 1);
+	return 0;
+}
+
 //const int n = 2;
 //
 //int x[n] = { 1,1 };
@@ -109,29 +163,3 @@ using std::endl;
 //	a = 1;
 //}
 //cout << a << endl;
-class SNeuron
-{
-public:
-	SNeuron(int weight)
-	{
-		this->weight = weight;
-		
-	}
-	void setInput(int input)
-	{
-		this->input = input;
-	}
-
-	
-private:
-	int weight;
-	int input;
-	int output;
-};
-int main()
-{
-	SNeuron S_1{1};
-	S_1.setInput(1);
-	return 0;
-}
-
