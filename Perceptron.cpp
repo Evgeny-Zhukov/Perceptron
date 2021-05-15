@@ -9,7 +9,7 @@ public:
 
 	Neuron()
 	{
-
+		this->weight = 0;
 	}
 	Neuron(int input,int weight)
 	{
@@ -23,63 +23,141 @@ public:
 	}
 	void setInput(Neuron a,Neuron b)
 	{
-		input = (a.output*a.weight+b.output*b.weight);
+		this->input = (a.output * a.weight + b.output * b.weight);
 	}
-	void setInput(Neuron a, Neuron b,Neuron c)
+	void setInput(Neuron a, Neuron b, Neuron c)
 	{
-		input = (a.output * a.weight + b.output * b.weight+c.output*c.weight);
+		this->input = (a.output * a.weight + b.output * b.weight + c.output * c.weight);
 	}
-	void Output()
+	void Output()//функция активации
 	{
-		if (input < 0)
+		if (this->input <= 0)
 		{
-			output = 0;
+			this->output = 0;
+
+		}
+		else 
+		{
+			this->output = 1;
+		}
+		
+	}
+	void ROutput()
+	{
+		if (this->input <= 0)
+		{
+			this->output = -1;
+
 		}
 		else
 		{
-			output = 1;
+			this->output = 1;
 		}
 	}
-	
-private:
 	int input;
 	int weight;
 	int output;
+private:
+	
 
 };
-
+int Reaction(int a,int ref)
+{
+	if (a < ref)
+	{
+		return 1;
+	}
+	else if (a > ref)
+	{
+		return -1;
+	}
+	else return 0;
+}
 int main()
 {
+	setlocale(LC_ALL, "Russian");
 	int i = 1;
 	int j = 1;
+
+	const int ref = -1;
+
 	Neuron S1_A1(i,-1);
-	S1_A1.Print();
+	
 	Neuron S2_A1(j,1);
-	S2_A1.Print();
+	
 	Neuron S1_A2(i,1);
-	S1_A2.Print();
+	
 	Neuron S2_A2(j,-1);
-	S2_A2.Print();
+	
 	Neuron S1_A3(i,1);
-	S1_A3.Print();
+	
 	Neuron S2_A3(j,1);
-	S2_A2.Print();
 
 	Neuron A1;
 	A1.setInput(S1_A1, S2_A1);
 	A1.Output();
-	A1.Print();
+	//A1.Print();
 
 	Neuron A2;
 	A2.setInput(S1_A2, S2_A2);
 	A2.Output();
-	A2.Print();
+	//A2.Print();
 
 	Neuron A3;
 	A3.setInput(S1_A3, S2_A3);
 	A3.Output();
-	A3.Print();
+	//A3.Print();
 
+	Neuron R;
+	R.setInput(A1, A2, A3);
+	R.ROutput();
+	//R.Print();
+	
+	
+	for (int k = 1; k < 10; k++)
+	{
+		if (R.output != ref)
+		{
 
+			int reactiaon = Reaction(R.output, ref);
+			switch (reactiaon)
+			{
+			case 0:
+				break;
+			default:
+				A1.weight += reactiaon * A1.output;
+				A2.weight += reactiaon * A2.output;
+				A3.weight += reactiaon * A3.output;
+				break;
+			}
+			cout << "\t" << endl;
+			A1.setInput(S1_A1, S2_A1);
+			A1.Output();
+			A1.Print();
+
+			A2.setInput(S1_A2, S2_A2);
+			A2.Output();
+			A2.Print();
+
+			A3.setInput(S1_A3, S2_A3);
+			A3.Output();
+			A3.Print();
+
+			R.setInput(A1, A2, A3);
+			R.Output();
+			R.Print();
+		}
+		else
+		{
+			A1.Print();
+			A2.Print();
+			A3.Print();
+			R.Print();
+			cout << "Перцептрон обучен, эпох прошло " << k << endl;
+			break;
+		}
+	}
+		
+	
 	return 0;
 }
