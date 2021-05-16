@@ -77,9 +77,9 @@ int main()
 {
 	setlocale(LC_ALL, "Russian");
 	int i = 1;
-	int j = 1;
+	int j = 0;
 
-	const int ref = -1;
+	const int ref = 1;
 
 	Neuron S1_A1(i,-1);
 	
@@ -131,21 +131,20 @@ int main()
 				break;
 			}
 			cout << "\t" << endl;
-			A1.setInput(S1_A1, S2_A1);
+			
 			A1.Output();
 			A1.Print();
-
-			A2.setInput(S1_A2, S2_A2);
+			
 			A2.Output();
 			A2.Print();
 
-			A3.setInput(S1_A3, S2_A3);
 			A3.Output();
 			A3.Print();
 
 			R.setInput(A1, A2, A3);
 			R.Output();
 			R.Print();
+			cout << endl;
 		}
 		else
 		{
