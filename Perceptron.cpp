@@ -77,9 +77,9 @@ int main()
 {
 	setlocale(LC_ALL, "Russian");
 	int i = 1;
-	int j = 0;
+	int j = 1;
 
-	const int ref = 1;
+	const int ref = -1;
 
 	Neuron S1_A1(i,-1);
 	
@@ -116,13 +116,14 @@ int main()
 	
 	for (int k = 1; k < 10; k++)
 	{
-		if (R.output != ref)
+		if (R.output != Reaction(R.output, ref))
 		{
 
 			int reactiaon = Reaction(R.output, ref);
 			switch (reactiaon)
 			{
 			case 0:
+				cout << "Перцептрон обучен, эпох прошло " << k << endl;
 				break;
 			default:
 				A1.weight += reactiaon * A1.output;
