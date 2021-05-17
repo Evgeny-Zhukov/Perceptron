@@ -47,7 +47,6 @@ public:
 		if (this->input <= 0)
 		{
 			this->output = -1;
-
 		}
 		else
 		{
@@ -77,9 +76,9 @@ int main()
 {
 	setlocale(LC_ALL, "Russian");
 	int i = 1;
-	int j = 1;
+	int j = 0;
 
-	const int ref = -1;
+	const int ref = 1;
 
 	Neuron S1_A1(i,-1);
 	
@@ -113,29 +112,20 @@ int main()
 	R.ROutput();
 	//R.Print();
 	
-	
+
 	for (int k = 1; k < 10; k++)
 	{
-		if (R.output != Reaction(R.output, ref))
+		int reactiaon = Reaction(R.output, ref);
+		if (Reaction(R.output, ref) != 0)
 		{
-
-			int reactiaon = Reaction(R.output, ref);
-			switch (reactiaon)
-			{
-			case 0:
-				cout << "Перцептрон обучен, эпох прошло " << k << endl;
-				break;
-			default:
-				A1.weight += reactiaon * A1.output;
-				A2.weight += reactiaon * A2.output;
-				A3.weight += reactiaon * A3.output;
-				break;
-			}
+			A1.weight += reactiaon * A1.output;
+			A2.weight += reactiaon * A2.output;
+			A3.weight += reactiaon * A3.output;
 			cout << "\t" << endl;
-			
+
 			A1.Output();
 			A1.Print();
-			
+
 			A2.Output();
 			A2.Print();
 
@@ -156,6 +146,7 @@ int main()
 			cout << "Перцептрон обучен, эпох прошло " << k << endl;
 			break;
 		}
+		
 	}
 		
 	
